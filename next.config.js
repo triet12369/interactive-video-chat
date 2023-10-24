@@ -6,5 +6,5 @@ module.exports = withBundleAnalyzer({
   reactStrictMode: false,
   eslint: {
     ignoreDuringBuilds: true,
-  },
+  }
 });
