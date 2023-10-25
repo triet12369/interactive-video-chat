@@ -7,7 +7,7 @@ type UseVideoStreamOptions = {
 
 const mediaStreamDefaults: MediaStreamConstraints = {
   video: true,
-  audio: true
+  audio: false
 }
 
 const displayMediaStreamDefaults: DisplayMediaStreamOptions = {
@@ -18,7 +18,7 @@ const displayMediaStreamDefaults: DisplayMediaStreamOptions = {
 const useVideoStream = (options: UseVideoStreamOptions = {}) => {
   const { mediaStreamOptions = mediaStreamDefaults, displayMediaStreamOptions = displayMediaStreamDefaults } = options;
   const [type, setType] = useState<'camera' | 'screen'>('camera');
-  const [stream, setStream] = useState<MediaStream | undefined>();
+  const [stream, setStream] = useState<MediaStream | null>(null);
 
   useEffect(() => {
     if (type && navigator) {
@@ -33,7 +33,7 @@ const useVideoStream = (options: UseVideoStreamOptions = {}) => {
         break;
       }
     }
-  }, [type]);
+  }, [displayMediaStreamOptions, mediaStreamOptions, type]);
   return { stream, setType };
 };
 

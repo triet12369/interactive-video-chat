@@ -16,11 +16,11 @@ const registerSession = (context: GetServerSidePropsContext): RegisterSessionRes
   const cookies = nookies.get(context);
 
   if (!roomId || typeof roomId !== 'string') {
-  return {
+    return {
       roomId: null,
       userIds: [],
     };
-}
+  }
 
   // check if deviceId exists, if not asign a random uuidv4
   const { deviceId } = cookies;

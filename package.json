@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "dev": "next dev -p 3003",
+    "dev": "next dev -p 3000",
     "build": "next build",
     "analyze": "ANALYZE=true next build",
     "start": "next start",
@@ -28,6 +28,7 @@
     "peerjs": "^1.5.1",
     "react": "18.2.0",
     "react-dom": "18.2.0",
+    "sass": "^1.69.4",
     "uuidv4": "^6.2.13"
   },
   "devDependencies": {

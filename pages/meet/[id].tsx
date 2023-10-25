@@ -1,10 +1,7 @@
 import { GetServerSideProps } from 'next';
-import { useState } from 'react';
 import registerSession from '@/src/service/sessionManager/registerSession';
-import Lobby from '@/src/components/MeetingRoom/Lobby/Lobby';
-import Meeting from '@/src/components/MeetingRoom/Meeting/Meeting';
 import { MeetingInfo } from '@/src/types/meeting';
-import useVideoStream from '@/src/hooks/useVideoStream';
+import MeetingRoom from '@/src/components/MeetingRoom/MeetingRoom';
 
 export const getServerSideProps: GetServerSideProps<MeetingInfo> = async (context) => {
   const { roomId, userIds } = registerSession(context);
@@ -17,12 +14,8 @@ export const getServerSideProps: GetServerSideProps<MeetingInfo> = async (contex
   };
 };
 
-export default function MeetingRoom(props: MeetingInfo) {
-  const [isLobby, setIsLobby] = useState(true);
-  const { stream } = useVideoStream();
+export default function Meeting(props: MeetingInfo) {
   return (
-    <>
-      {isLobby ? <Lobby {...props} stream={stream} /> : <Meeting {...props} />}
-    </>
+    <MeetingRoom {...props}/>
   );
 }
