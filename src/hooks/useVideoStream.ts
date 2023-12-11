@@ -19,17 +19,24 @@ const useVideoStream = (options: UseVideoStreamOptions = {}) => {
   const { mediaStreamOptions = mediaStreamDefaults, displayMediaStreamOptions = displayMediaStreamDefaults } = options;
   const [type, setType] = useState<'camera' | 'screen'>('camera');
   const [stream, setStream] = useState<MediaStream | null>(null);
+  const [isInitialized, setIsInitialized] = useState<boolean>(false);
 
   const initializeStream = useCallback(() => {
     if (type && navigator) {
       switch (type) {
       case 'camera':
         navigator.mediaDevices?.getUserMedia({ ...mediaStreamOptions })
-          .then((mediaStream) => setStream(mediaStream));
+          .then((mediaStream) => {
+            setStream(mediaStream);
+            setIsInitialized(true);
+          });
         break;
       case 'screen':
         navigator.mediaDevices?.getDisplayMedia({ ...displayMediaStreamOptions })
-          .then((displayStream) => setStream(displayStream));
+          .then((displayStream) => {
+            setStream(displayStream);
+            setIsInitialized(true);
+          });
         break;
       }
     }
@@ -38,7 +45,7 @@ const useVideoStream = (options: UseVideoStreamOptions = {}) => {
   useEffect(() => {
     initializeStream()
   }, [initializeStream]);
-  return { stream, setType, initializeStream };
+  return { stream, setType, initializeStream, isInitialized };
 };
 
 export default useVideoStream;
