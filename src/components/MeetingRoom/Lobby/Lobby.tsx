@@ -1,29 +1,23 @@
 import React, { FC } from 'react';
-import { Button, Grid, Stack } from '@mantine/core';
+import { Stack } from '@mantine/core';
 import { MeetingInfo } from '@/src/types/meeting';
-import { useVideoStreamControl } from '@/src/providers/VideoStreamProvider';
-import VideoFrame from '../../VideoFrame/VideoFrame';
 import UserList from '../UserList/UserList';
+import styles from './Lobby.module.scss';
+import VideoCall from '../../Video/VideoCall/VideoCall';
 
-type LobbyProps = MeetingInfo & {
-  onJoinMeeting: () => void;
-};
+type LobbyProps = MeetingInfo;
 
 const Lobby: FC<LobbyProps> = (props) => {
-  const { onJoinMeeting, userIds } = props;
-  const controls = useVideoStreamControl();
+  const { userIds } = props;
+
+
   return (
-    <Grid w="100%" h="100%" grow>
-      <Grid.Col span={8}>
-        <VideoFrame {...controls} />
-      </Grid.Col>
-      <Grid.Col span={4}>
-        <Stack>
-          <UserList userIds={userIds} />
-          <Button onClick={onJoinMeeting}>Join Room</Button>
-        </Stack>
-      </Grid.Col>
-    </Grid>
+    <div className={styles['lobby-wrapper']}>
+      <VideoCall {...props}/>
+      <Stack className={styles["user-list"]}>
+        <UserList userIds={userIds} />
+      </Stack>
+    </div>
   );
 };
 

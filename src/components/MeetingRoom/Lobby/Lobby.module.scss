@@ -1,0 +1,15 @@
+@import "/src/styles/mixins.scss";
+
+.lobby-wrapper {
+  height: 100%;
+  display: grid;
+  grid-template-columns: auto minmax(20%, 200px);
+  @include mobile-only {
+    grid-template-columns: auto;
+    grid-template-rows: auto minmax(20%, 200px);
+  }
+  .user-list {
+    padding: var(--mantine-spacing-sm);
+    border-radius: 3px;
+  }
+}

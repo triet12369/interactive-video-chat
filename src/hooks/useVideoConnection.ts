@@ -10,7 +10,7 @@ type UsePeerConnectionOptions = {
   onStreamReceived?: (stream: MediaStream) => void;
 }
 
-enum CONNECTION_STATUS {
+export enum CONNECTION_STATUS {
   WAITING = "WAITING",
   OPEN = "OPEN",
   CLOSED = "CLOSED"
@@ -36,6 +36,10 @@ const usePeerConnection = (options: UsePeerConnectionOptions) => {
     setPeerStream(stream);
     onStreamReceived && onStreamReceived(stream);
   }, [onStreamReceived]);
+
+  const handleCloseStream = useCallback(() => {
+    setMediaStatus(CONNECTION_STATUS.CLOSED)
+  }, []);
 
   // setup Peer
   useEffect(() => {
@@ -63,15 +67,17 @@ const usePeerConnection = (options: UsePeerConnectionOptions) => {
       // on receive call
       peerManager.on("call", (call) => {
         if (ownStream) {
+          setMediaConn(call);
           call.answer(ownStream);
           call.on("stream", handleReceiveStream)
+          call.on("close", handleCloseStream);
         }
       })
     }
     return () => {
       connection?.close();
     }
-  }, [peerManager, otherUserIds, ownStream, handleReceiveStream, dataConn]);
+  }, [peerManager, otherUserIds, ownStream, handleReceiveStream, dataConn, handleCloseStream]);
 
   const startVideoCall = () => {
     if (!otherUserIds[0] || !ownStream || !peerManager) return;
@@ -79,7 +85,7 @@ const usePeerConnection = (options: UsePeerConnectionOptions) => {
     const conn = peerManager.call(otherPeerId, ownStream);
     setMediaConn(conn);
     conn.on("stream", handleReceiveStream);
-    conn.on("close", () => setMediaStatus(CONNECTION_STATUS.CLOSED));
+    conn.on("close", handleCloseStream);
   }
 
   const stopVideoCall = () => {

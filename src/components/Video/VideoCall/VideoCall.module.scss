@@ -1,0 +1,41 @@
+@import "/src/styles/mixins.scss";
+
+.wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  width: 100%;
+  background: black;
+  overflow: hidden;
+  .own-stream {
+    width: 480px;
+    height: 480px;
+    &.active {
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 240px;
+      height: 240px;
+      @include mobile-only {
+        width: 120px;
+        height: 120px;
+      }
+      border-radius: 5px;
+      overflow: hidden;
+    }    
+  }
+  .main-stream {
+    width: 100%;
+    height: 100%;
+  }
+  .action-buttons {
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    bottom: var(--mantine-spacing-sm);
+    gap: var(--mantine-spacing-sm);
+  }
+}

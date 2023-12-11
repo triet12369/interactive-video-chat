@@ -3,7 +3,7 @@ import { Button, Grid, Stack } from '@mantine/core';
 import { MeetingInfo } from '@/src/types/meeting';
 import { useVideoStreamControl } from '@/src/providers/VideoStreamProvider';
 import usePeerConnection from '@/src/hooks/useVideoConnection';
-import VideoFrame from '../../VideoFrame/VideoFrame';
+import VideoFrame from '../../Video/VideoFrame/VideoFrame';
 
 type MeetingProps = MeetingInfo;
 
