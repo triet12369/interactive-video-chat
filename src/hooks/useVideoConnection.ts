@@ -89,6 +89,7 @@ const usePeerConnection = (options: UsePeerConnectionOptions) => {
     setMediaConn(conn);
     conn.on("stream", handleReceiveStream);
     conn.on("close", handleCloseStream);
+    console.log("startVideoCall connection", conn);
   }
 
   const stopVideoCall = () => {
