@@ -1,8 +1,10 @@
 import React, { FC, useEffect, useRef } from 'react'
-import { VideoStreamProviderValues } from '@/src/providers/VideoStreamProvider';
 import classes from "./VideoFrame.module.scss";
 
-type VideoFrameProps = VideoStreamProviderValues;
+type VideoFrameProps = {
+  stream: MediaStream | null;
+  isActive: boolean;
+};
 
 const VideoFrame: FC<VideoFrameProps> = (props) => {
   const { stream, isActive } = props;

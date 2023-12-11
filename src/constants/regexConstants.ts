@@ -1,0 +1,1 @@
+export const REGEX_ROOM_ID = /^[0-9]{3}-[0-9]{3}-[0-9]{3}$/;

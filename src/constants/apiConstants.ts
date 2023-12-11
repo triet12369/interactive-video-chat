@@ -1,0 +1,1 @@
+export const HEADER_DEVICE_ID = "X-DEVICE-ID";

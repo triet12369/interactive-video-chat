@@ -39,6 +39,9 @@ class InMemoryRoomManager extends RoomManagerBase {
       return false;
     }
   }
+  getRoomList() {
+    return [...this.roomList.values()]
+  }
 }
 
 export default InMemoryRoomManager;

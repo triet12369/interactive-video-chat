@@ -24,11 +24,11 @@ const useVideoStream = (options: UseVideoStreamOptions = {}) => {
     if (type && navigator) {
       switch (type) {
       case 'camera':
-        navigator.mediaDevices.getUserMedia({ ...mediaStreamOptions })
+        navigator.mediaDevices?.getUserMedia({ ...mediaStreamOptions })
           .then((mediaStream) => setStream(mediaStream));
         break;
       case 'screen':
-        navigator.mediaDevices.getDisplayMedia({ ...displayMediaStreamOptions })
+        navigator.mediaDevices?.getDisplayMedia({ ...displayMediaStreamOptions })
           .then((displayStream) => setStream(displayStream));
         break;
       }
