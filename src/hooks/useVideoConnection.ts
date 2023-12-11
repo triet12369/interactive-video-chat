@@ -3,10 +3,10 @@ import { DataConnection, MediaConnection } from "peerjs";
 import { getUserId } from '../utils/getUserId';
 import { getPeerId } from '../utils/getPeerId';
 import { PeerJS } from '../types/peer';
+import { useVideoStreamControl } from '../providers/VideoStreamProvider';
 
 type UsePeerConnectionOptions = {
   userIds: string[];
-  ownStream: MediaStream | null;
   onStreamReceived?: (stream: MediaStream) => void;
 }
 
@@ -20,7 +20,9 @@ export enum CONNECTION_STATUS {
  * Handle P2P connection to the other user in the room
  */
 const usePeerConnection = (options: UsePeerConnectionOptions) => {
-  const { userIds = [], ownStream, onStreamReceived } = options;
+  const { userIds = [], onStreamReceived } = options;
+  const controls = useVideoStreamControl();
+  const { stream: ownStream } = controls;
   const currentUserId = getUserId();
   const otherUserIds = userIds.filter((userId) => userId !== currentUserId);
 
@@ -80,6 +82,7 @@ const usePeerConnection = (options: UsePeerConnectionOptions) => {
   }, [peerManager, otherUserIds, ownStream, handleReceiveStream, dataConn, handleCloseStream]);
 
   const startVideoCall = () => {
+    console.log("startVideoCall", { ownStream, peerManager, userIds, currentUserId });
     if (!otherUserIds[0] || !ownStream || !peerManager) return;
     const otherPeerId = getPeerId(otherUserIds[0]);
     const conn = peerManager.call(otherPeerId, ownStream);

@@ -1,6 +1,6 @@
 import React, { FC, useEffect } from 'react'
 import { ActionIcon } from '@mantine/core';
-import { IconPhone, IconX } from '@tabler/icons-react';
+import { IconPhone, IconRefresh, IconX } from '@tabler/icons-react';
 import classNames from 'classnames';
 import usePeerConnection, { CONNECTION_STATUS } from '@/src/hooks/useVideoConnection';
 import { useVideoStreamControl } from '@/src/providers/VideoStreamProvider';
@@ -11,9 +11,8 @@ import classes from "./VideoCall.module.scss";
 const VideoCall: FC<MeetingInfo> = (props) => {
   const { userIds } = props;
   const controls = useVideoStreamControl();
-  const { stream: ownStream } = controls;
 
-  const { peerStream, startVideoCall, stopVideoCall, mediaStatus } = usePeerConnection({ ownStream, userIds });
+  const { peerStream, startVideoCall, stopVideoCall, mediaStatus } = usePeerConnection({ userIds });
   const isVideoCalling = mediaStatus === CONNECTION_STATUS.OPEN;
 
   useEffect(() => {
@@ -28,6 +27,9 @@ const VideoCall: FC<MeetingInfo> = (props) => {
       <div className={classes['action-buttons']}>
         <ActionIcon color="blue" disabled={userIds.length !== 2} onClick={startVideoCall} size="lg">
           <IconPhone stroke={2}/>
+        </ActionIcon>
+        <ActionIcon color="blue" variant="white" onClick={() => controls.initializeStream()} size="lg">
+          <IconRefresh stroke={2}/>
         </ActionIcon>
         {isVideoCalling &&
         <ActionIcon color="red" disabled={userIds.length !== 2} onClick={stopVideoCall} size="lg">

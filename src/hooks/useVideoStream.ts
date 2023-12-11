@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
 type UseVideoStreamOptions = {
   mediaStreamOptions?: MediaStreamConstraints;
@@ -20,7 +20,7 @@ const useVideoStream = (options: UseVideoStreamOptions = {}) => {
   const [type, setType] = useState<'camera' | 'screen'>('camera');
   const [stream, setStream] = useState<MediaStream | null>(null);
 
-  useEffect(() => {
+  const initializeStream = useCallback(() => {
     if (type && navigator) {
       switch (type) {
       case 'camera':
@@ -34,7 +34,11 @@ const useVideoStream = (options: UseVideoStreamOptions = {}) => {
       }
     }
   }, [displayMediaStreamOptions, mediaStreamOptions, type]);
-  return { stream, setType };
+
+  useEffect(() => {
+    initializeStream()
+  }, [initializeStream]);
+  return { stream, setType, initializeStream };
 };
 
 export default useVideoStream;

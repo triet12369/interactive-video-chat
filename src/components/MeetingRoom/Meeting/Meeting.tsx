@@ -10,9 +10,8 @@ type MeetingProps = MeetingInfo;
 const Meeting: FC<MeetingProps> = (props) => {
   const { userIds } = props;
   const controls = useVideoStreamControl();
-  const { stream: ownStream } = controls;
 
-  const { peerStream, startVideoCall, stopVideoCall } = usePeerConnection({ ownStream, userIds })
+  const { peerStream, startVideoCall, stopVideoCall } = usePeerConnection({ userIds })
 
   useEffect(() => {
     window.addEventListener("beforeunload", stopVideoCall);

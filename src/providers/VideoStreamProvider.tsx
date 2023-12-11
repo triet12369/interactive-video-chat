@@ -8,6 +8,7 @@ const VideoStreamContext = createContext<VideoStreamProviderValues>({
   enableStream: () => {},
   disableStream: () => {},
   toggleStream: () => {},
+  initializeStream: () => {},
   isActive: false
 });
 
@@ -19,10 +20,11 @@ export type VideoStreamProviderValues = {
   enableStream: () => void,
   disableStream: () => void,
   toggleStream: () => void,
+  initializeStream: () => void
 };
 
 function VideoStreamProvider(props: { children: ReactNode }) {
-  const { stream, setType } = useVideoStream();
+  const { stream, setType, initializeStream } = useVideoStream();
   const [isActive, setIsActive] = useState<boolean>(true);
 
   const setUseCamera = useCallback(
@@ -54,9 +56,10 @@ function VideoStreamProvider(props: { children: ReactNode }) {
       enableStream,
       disableStream,
       toggleStream,
-      isActive
+      isActive,
+      initializeStream
     }),
-    [stream, setUseCamera, setUseScreen, enableStream, disableStream, toggleStream, isActive],
+    [stream, setUseCamera, setUseScreen, enableStream, disableStream, toggleStream, initializeStream, isActive],
   );
 
   return <VideoStreamContext.Provider value={providerValue} {...props} />;
