@@ -2,6 +2,7 @@ import { useCallback, useEffect, useState } from 'react'
 import { DataConnection, MediaConnection } from "peerjs";
 import { getUserId } from '../utils/getUserId';
 import { getPeerId } from '../utils/getPeerId';
+import { PeerJS } from '../types/peer';
 
 type UsePeerConnectionOptions = {
   userIds: string[];
@@ -23,7 +24,7 @@ const usePeerConnection = (options: UsePeerConnectionOptions) => {
   const currentUserId = getUserId();
   const otherUserIds = userIds.filter((userId) => userId !== currentUserId);
 
-  const [peerManager, setPeerManager] = useState<Peer | undefined>();
+  const [peerManager, setPeerManager] = useState<PeerJS | undefined>();
   const [dataConn, setDataConn] = useState<DataConnection | undefined>();
   const [mediaConn, setMediaConn] = useState<MediaConnection | undefined>();
   const [dataStatus, setDataStatus] = useState<CONNECTION_STATUS>(CONNECTION_STATUS.WAITING);

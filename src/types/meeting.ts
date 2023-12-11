@@ -1,3 +1,3 @@
-import { RegisterSessionResult } from '../service/sessionManager/registerSession';
+import { RegisterSessionResult } from "@/pages/api/room/register";
 
 export type MeetingInfo = RegisterSessionResult;
